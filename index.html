@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹게임 포털</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #141E30, #243B55);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .game-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .game-list li {
+            margin: 15px;
+        }
+        .game-list a {
+            display: block;
+            width: 200px;
+            padding: 15px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        .game-list a:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>웹게임 포털</h1>
+        <p>다양한 웹게임을 즐겨보세요!</p>
+        <ul class="game-list">
+            <li><a href="game1.html">🎮 똥 피하기</a></li>
+            <li><a href="game2.html">🕹️ 숫자 맞추기</a></li>
+            <li><a href="game3.html">⚔️ 미로 탈출</a></li>
+        </ul>
+        <div class="footer">
+            &copy; 2025 웹게임 포털 | 모든 권리 보유
+        </div>
+    </div>
+</body>
+</html>

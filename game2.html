@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자 맞추기 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(270deg, #ff9a9e, #fad0c4);
+            background-size: 400% 400%;
+            animation: backgroundAnimation 10s infinite alternate;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .game-container {
+            margin-top: 50px;
+        }
+
+        .input-container {
+            margin: 20px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 20px;
+            width: 100px;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        #gameStatus {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>숫자 맞추기 게임</h1>
+    <div class="game-container">
+        <p>숫자를 맞추어 보세요! 1부터 <span id="max-number">100</span> 사이의 숫자를 입력하세요.</p>
+
+        <div class="input-container">
+            <input type="number" id="userInput" min="1" max="100" placeholder="숫자 입력">
+        </div>
+
+        <div class="button-container">
+            <button class="button" onclick="checkGuess()">숫자 맞추기</button>
+            <button class="button" onclick="resetGame()">게임 초기화</button>
+        </div>
+
+        <div id="gameStatus"></div>
+    </div>
+
+    <script>
+        let targetNumber; // 목표 숫자
+        let attempts; // 시도 횟수
+        let maxNumber = 100; // 최대 숫자
+        let minNumber = 1; // 최소 숫자
+
+        // 게임 초기화 함수
+        function resetGame() {
+            targetNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+            attempts = 0;
+            document.getElementById("gameStatus").innerText = `1과 ${maxNumber} 사이의 숫자를 맞추세요.`;
+            document.getElementById("max-number").innerText = maxNumber;
+            document.getElementById("userInput").value = "";
+            document.getElementById("userInput").focus();
+        }
+
+        // 숫자 맞추기 함수
+        function checkGuess() {
+            const userInput = document.getElementById("userInput").value;
+            if (userInput === "") {
+                document.getElementById("gameStatus").innerText = "숫자를 입력하세요!";
+                document.getElementById("gameStatus").classList.add("error");
+                return;
+            }
+
+            const guess = parseInt(userInput, 10);
+
+            // 숫자가 범위 내에 있는지 확인
+            if (guess < minNumber || guess > maxNumber) {
+                document.getElementById("gameStatus").innerText = `숫자는 ${minNumber}과 ${maxNumber} 사이여야 합니다.`;
+                document.getElementById("gameStatus").classList.add("error");
+                return;
+            }
+
+            attempts++;
+
+            if (guess === targetNumber) {
+                document.getElementById("gameStatus").innerText = `정답! ${targetNumber}를 ${attempts}번 만에 맞추셨습니다!`;
+                document.getElementById("gameStatus").classList.add("success");
+
+                // 3초 후 메인 화면으로 이동
+                setTimeout(() => {
+                    alert("게임을 종료합니다. 3초 후 메인 화면으로 이동합니다.");
+                    window.location.href = "index.html"; // 메인 페이지로 이동 (index.html을 메인 페이지로 가정)
+                }, 3000);
+
+            } else if (guess < targetNumber) {
+                document.getElementById("gameStatus").innerText = `더 큰 숫자입니다. 시도 횟수: ${attempts}`;
+            } else {
+                document.getElementById("gameStatus").innerText = `더 작은 숫자입니다. 시도 횟수: ${attempts}`;
+            }
+
+            // 게임 상태 업데이트
+            document.getElementById("gameStatus").classList.remove("error", "success");
+        }
+
+        // 페이지 로드 시 게임 초기화
+        window.onload = resetGame;
+
+        // 난이도 설정 (최대 숫자 변경)
+        function setDifficulty(level) {
+            if (level === 'easy') {
+                maxNumber = 50;
+            } else if (level === 'normal') {
+                maxNumber = 100;
+            } else if (level === 'hard') {
+                maxNumber = 200;
+            }
+            resetGame();
+        }
+    </script>
+</body>
+</html>
